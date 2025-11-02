@@ -1,0 +1,237 @@
+################################################################################
+### VARIABLES
+################################################################################
+
+set $browser firefox-developer-edition
+set $mod Mod4
+set $term alacritty
+set $file_man nautilus
+set $menu rofi -show drun -run-shell-command 'zsh -e zsh -ic "{cmd} && read"'
+set $browser firefox-developer-edition
+set $alt_browser flatpak run com.github.Eloston.UngoogledChromium
+set $audio_man pavucontrol
+set $email_client evolution
+
+set $left left
+set $down down
+set $up up
+set $right right
+
+###############################################################################
+###  WINDOW ASSIGNMENTS
+###############################################################################
+assign [class="firefox"] workspace 1
+assign [class="VSCodium"] workspace 2
+assign [class="vscode"] workspace 2
+assign [class="code"] workspace 2
+assign [class="alacritty"] workspace 3
+assign [class="Alacritty"] workspace 3
+assign [app_id="Alacritty"] workspace 3
+assign [app_id="alacritty"] workspace 3
+assign [class="Spotify"] workspace 6
+assign [app_id="firefox"] workspace 1
+
+################################################################################
+###  STARTUP
+################################################################################
+
+workspace 1
+
+################################################################################
+###  STYLING
+################################################################################
+
+default_border pixel 1
+client.focused          #81a1c1 #81a1c1 #81a1c1 #81a1c1 #81a1c1
+client.focused_inactive #282c34 #282c34 #282c34 #282c34 #282c34
+client.urgent           #e06c75 #e06c75 #e06c75 #e06c75 #e06c75
+client.unfocused        #282c34 #282c34 #282c34 #282c34 #282c34
+default_dim_inactive 0.8
+
+gaps inner 1
+gaps outer 0
+
+# Initial execs
+exec swaybg --image ~/Downloads/Norrkoping.jpg
+exec swaync
+exec spotify
+exec firefox-developer-edition
+exec alacritty
+
+blur enable
+blur_xray enable
+corner_radius 5
+shadows enable
+default_dim_inactive 0.8
+titlebar_separator enable
+
+################################################################################
+###  KEYBINDINGS
+################################################################################
+
+## Applications:
+
+    bindsym $mod+Return exec $term
+    bindsym $mod+Shift+Return exec $file_man
+    bindsym $mod+Space exec $menu
+    bindsym $mod+b exec $browser
+    bindsym $mod+s exec signal-deskop --use-tray-icon
+    bindsym $mod+Shift+b exec $alt_browser
+
+    bindsym $mod+Alt+a exec $audio_man
+    bindsym $mod+Alt+b exec blueman-manager
+
+## Sway:
+
+    bindsym $mod+q kill
+    bindsym $mod+Shift+q exec swaymsg exit
+    bindsym $mod+Shift+r reload
+
+    floating_modifier $mod normal
+
+## Window Navigation:
+
+    # Move your focus around
+    bindsym $mod+$left focus left
+    bindsym $mod+$down focus down
+    bindsym $mod+$up focus up
+    bindsym $mod+$right focus right
+
+    # Move the focused window with the same, but add Shift
+    bindsym $mod+Shift+$left move left
+    bindsym $mod+Shift+$down move down
+    bindsym $mod+Shift+$up move up
+    bindsym $mod+Shift+$right move right
+
+## Workspaces:
+
+    # Switch to workspace
+    bindsym $mod+1 workspace number 1
+    bindsym $mod+2 workspace number 2
+    bindsym $mod+3 workspace number 3
+    bindsym $mod+4 workspace number 4
+    bindsym $mod+5 workspace number 5
+    bindsym $mod+6 workspace number 6
+    bindsym $mod+7 workspace number 7
+    bindsym $mod+8 workspace number 8
+    bindsym $mod+9 workspace number 9
+
+    # Move focused container to workspace
+    bindsym $mod+Alt+1 move container to workspace number 1
+    bindsym $mod+Alt+2 move container to workspace number 2
+    bindsym $mod+Alt+3 move container to workspace number 3
+    bindsym $mod+Alt+4 move container to workspace number 4
+    bindsym $mod+Alt+5 move container to workspace number 5
+    bindsym $mod+Alt+6 move container to workspace number 6
+    bindsym $mod+Alt+7 move container to workspace number 7
+    bindsym $mod+Alt+8 move container to workspace number 8
+    bindsym $mod+Alt+9 move container to workspace number 9
+
+    # Switch back to previous workspace
+    bindsym $mod+Tab workspace back_and_forth
+
+## Layout stuff:
+
+    # Switch layout style of current container
+    bindsym $mod+w layout tabbed
+    bindsym $mod+e layout toggle split
+
+    # bindsym $mod+space focus mode_toggle
+    bindsym $mod+f fullscreen
+    bindsym $mod+t floating toggle
+    bindsym $mod+a focus parent
+
+## Scratchpad:
+
+#    bindsym $mod+Shift+minus move scratchpad
+#    bindsym $mod+minus scratchpad show
+
+
+
+#    bindsym $mod+p exec grim
+
+mode "resize" {
+    bindsym $left resize grow width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize shrink width 10px
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# Volume
+bindsym XF86AudioMute        exec --no-startup-id "amixer -q set Master toggle"
+bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer -q set Master 5%+ unmute"
+bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -q set Master 5%- unmute"
+
+# Media player controls
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioPause exec --no-startup-id playerctl play-pause
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+
+# Screen brightness controls
+bindsym XF86MonBrightnessUp exec light -A 5
+bindsym XF86MonBrightnessDown exec light -U 5
+
+# Take a fullscreen screenshot
+bindsym $mod+Print exec grim -t png "~/Pictures/screenshot-$(date +%Y-%m-%d_%H-%m-%s).png"
+
+# Take a Screenshot with the region select
+bindsym $mod+p exec grim -g "$(slurp)" "$HOME/Pictures/screenshot-$(date +%Y-%m-%d_%H-%m-%s).png"
+
+# Lock screen
+bindsym $mod+l exec swaylock -c 1f2227
+
+# You can "split" the current object of your focus with
+# $mod+v or $mod+h, for horizontal and vertical splits
+# respectively.
+bindsym $mod+h splith
+bindsym $mod+v splitv
+
+
+################################################################################
+###  GET GTK WORKING IN SWAY
+################################################################################
+
+exec_always import-gsettings
+
+################################################################################
+###  STATUS BAR
+################################################################################
+
+bar {
+        swaybar_command waybar
+}
+
+include /etc/sway/config.d/*
+
+# Change keyboad layout
+input * xkb_layout "ie"
+input * xkb_numlock enable
+
+# Configure touchpad
+input type:touchpad {
+    tap enabled
+    natural_scroll enabled
+    tap_button_map lrm
+}
+
+# Set monitors and workspaces for monitors
+output DP-1 pos 0 0 res 1920x1080@60.003Hz
+output eDP-1 pos 0 1080
+
+workspace 1 output DP-1
+workspace 2 output eDP-1
+
+# Autostart Applications
+exec "/usr/lib/protonmail/bridge/proton-bridge-launcher" "--no-window"
+
+# Turn off bluetooth by default
+exec bluetooth off
+
+# Set Cursor theme
+set $my_cursor Qogir
+set $my_cursor_size 18

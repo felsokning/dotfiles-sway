@@ -1,0 +1,237 @@
+// =============================================================================
+//
+// Waybar configuration
+//
+// Configuration reference: https://github.com/Alexays/Waybar/wiki/Configuration
+//
+// =============================================================================
+{
+    // -------------------------------------------------------------------------
+    // Global configuration
+    // -------------------------------------------------------------------------
+
+    "layer": "bottom",
+    "position": "top",
+
+    // If height property would be not present, it'd be calculated dynamically
+    "height": 16,
+    "modules-left": [
+        "custom/menu",
+        "sway/workspaces",
+        "custom/media"
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "custom/pacman",
+        "network",
+        "memory",
+        "cpu",
+        "custom/temp",
+        "backlight",
+        "pulseaudio",
+        "battery",
+        "tray",
+        "custom/power"
+    ],
+
+
+    // -------------------------------------------------------------------------
+    // Modules
+    // -------------------------------------------------------------------------
+
+    "backlight": {
+        "format": " {percent}%",
+        "interval": 2,
+        "on-scroll-up": "brightnessctl set +2%",
+        "on-scroll-down": "brightnessctl set 2%-"
+    },
+
+    "battery": {
+        "interval": 10,
+        "states": {
+            "warning": 25,
+            "critical": 15
+        },
+        // Connected to AC
+        "format": " {icon} {capacity}%", // Icon: bolt
+        // Not connected to AC
+        "format-discharging": "{icon} {capacity}%",
+        "format-icons": [
+            "", // Icon: battery-full
+            "", // Icon: battery-three-quarters
+            "", // Icon: battery-half
+            "", // Icon: battery-quarter
+            ""  // Icon: battery-empty
+        ],
+        "tooltip": true
+    },
+
+    "clock": {
+        "interval": 1,
+        "format": "  {:%a, %d %b %Y     %H:%M (%Z)}",
+        "tooltip-format": "{calendar}",
+        "calendar": {
+            "mode"          : "month",
+            "mode-mon-col"  : 3,
+            "weeks-pos"     : "right",
+            "on-scroll"     : 1,
+            "on-click-right": "mode",
+            "format": {
+                "months":     "<span background='#262842' color='#ffead3'><b>{}</b></span>",
+                "days":       "<span background='#262842' color='#ecc6d9'><b>{}</b></span>",
+                "weeks":      "<span background='#262842' color='#99ffdd'><b>W{}</b></span>",
+                "weekdays":   "<span background='#262842' color='#ffcc66'><b>{}</b></span>",
+                "today":      "<span background='#262842' color='#ff6699'><b><u>{}</u></b></span>"
+            }
+        },
+    },
+
+    "cpu": {
+        "interval": 3,
+        "format": " {usage}% ({load})", // Icon: microchip
+        "states": {
+          "warning": 70,
+          "critical": 90
+        },
+    },
+
+    "custom/media": {
+        "interval": 1,
+        "format": "{}",
+        /* "escape": true, */
+        "tooltip": true,
+        "return-type": "json",
+        "max-length": 40,
+        "on-click": "playerctl -p spotify play-pause",
+        "on-click-right": "playerctl -p spotify stop",
+        "smooth-scrolling-threshold": 10, // This value was tested using a trackpad, it should be lowered if using a mouse.
+        "on-scroll-up": "playerctl -p spotify next",
+        "on-scroll-down": "playerctl -p spotify previous",
+        "exec": "pwsh -c ~/.config/waybar/get-spotifystatus.ps1", // Script in resources/custom_modules folder
+    },
+
+    "custom/menu": {
+        "format": "  ",
+        "tooltip": false,
+        "on-click": "$HOME/.config/hypr/scripts/fullmenu",
+    },
+
+    "custom/pacman": {
+        "format": " {}",
+        "interval": 30,
+        "exec": "checkupdates | wc -l",
+        "on-click": "update-system",
+        "signal": 8,
+        "tooltip-format": "{} updates available"
+    },
+
+    "custom/power": {
+        "format": "  ",
+        "tooltip": false,
+        "on-click": "wlogout"
+    },
+
+    "custom/keyboard-layout": {
+      "exec": "swaymsg -t get_inputs | grep -m1 'xkb_active_layout_name' | cut -d '\"' -f4 | cut -d ' ' -f1",
+      // Interval set only as a fallback, as the value is updated by signal
+      "interval": 10,
+      "format": " {}", // Icon: keyboard
+      // Signal sent by Sway key binding (~/.config/sway/key-bindings)
+      "signal": 1, // SIGHUP
+      "tooltip": false,
+      "on-click": "swaymsg input type:keyboard xkb_switch_layout next",
+      "on-scroll-up": "swaymsg input type:keyboard xkb_switch_layout next",
+      "on-scroll-down": "swaymsg input type:keyboard xkb_switch_layout prev",
+    },
+
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": "",
+        },
+    },
+
+    "memory": {
+        "interval": 3,
+        "format": " {}%", // Icon: memory
+        "states": {
+            "warning": 70,
+            "critical": 90
+        }
+    },
+
+    "network": {
+        "interval": 3,
+        "format-wifi": " {essid}", // Icon: wifi
+        "format-ethernet": " {ifname}: {ipaddr}/{cidr}", // Icon: ethernet
+        "format-disconnected": "⚠  Disconnected",
+        "tooltip-format": "{ifname}: {ipaddr}\nSignal Strength: {signalStrength}%\nBSSID: {bssid}\nGateway: {gwaddr}"
+    },
+
+    "pulseaudio": {
+        "scroll-step": 2,
+        "format": "{icon} {volume}%",
+        "format-muted": " Muted", // Icon: volume-mute
+        "format-icons": {
+            "headphones": "", // Icon: headphones
+            "handsfree": "", // Icon: headset
+            "headset": "", // Icon: headset
+            "phone": "", // Icon: phone
+            "portable": "", // Icon: phone
+            "car": "", // Icon: car
+            "default": ["", ""] // Icons: volume-down, volume-up
+        },
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+        "on-click-right": "alacritty --title='Sound Mixer' --command='pulsemixer'",
+        "tooltip": true
+    },
+
+    "sway/mode": {
+        "format": "<span style=\"italic\"> {}</span>", // Icon: expand-arrows-alt
+        "tooltip": false
+    },
+
+    "sway/window": {
+        "format": "{}",
+        "max-length": 120
+    },
+
+    "sway/workspaces": {
+        "all-outputs": false,
+        "disable-scroll": true,
+        /* "format": "{icon} {name}", */
+	    "format": "{icon}",
+        "format-icons": {
+            "1": "", // Icon: firefox-browser
+            "2": "", // Icon: code
+            "3": "", // Icon: terminal
+            "4": "", // Icon: mail
+            "5": "", // Icon: book
+            "6": "", // Icon: music
+            "7": "", // Icon: cloud-download-alt
+        },
+        "persistent-workspaces": {
+            "1":[],
+            "2":[],
+            "3":[],
+            "4":[],
+            "5":[],
+            "6":[]
+        }	
+    },
+
+    "custom/temp": {
+		"exec": "/home/finxol/.config/waybar/temperature.py",
+        "format": "{}°C {icon}",
+        "format-icons": [""],
+		"interval": 10
+    },
+
+    "tray": {
+        "icon-size": 21,
+        "spacing": 10
+    }
+}

@@ -1,0 +1,236 @@
+* {
+  background-color: rgba(30, 30, 46, 0.0);
+  border: none;
+  /* border-radius: 14px; */
+  font-family: "SF Pro Display", "JetBrainsMono Nerd Font Propo";
+  font-size: 14px;
+  margin: 0px 0px 0px 3px;
+}
+
+window#waybar {
+  /* background-color: rgba(30, 30, 46, 0.2); */
+  /* border: 1.5px solid #cba6f7; */
+  color: #ffffff;
+}
+
+#backlight {
+  background-color: #262842;
+  border-radius: 14px;
+  color: #fbecc9;
+  margin: 3px 1px 0px 1px;
+  padding: 0px 9px 0px 9px;
+}
+
+#backlight-slider trough highlight {
+  background-image: linear-gradient(to right, #fbecc9 30%, #f5c2e7 50%, #fab387 5000%);
+}
+
+#pulseaudio {
+  background-color: #262842;
+  border-radius: 14px;
+  color: #afd0fc;
+  margin: 3px 1px 0px 1px;
+  padding: 0px 9px 0px 9px;
+}
+
+#pulseaudio.muted {
+  color: #eba0ac;
+  margin: 0px 15px 0px 10px;
+}
+
+#pulseaudio-slider trough highlight {
+  background-image: linear-gradient(to right, #afd0fc 30%, #89dceb 50%, #74c7ec 5000%);
+  border-radius: 16px;
+}
+
+scale trough {
+  all: unset;
+  background-color: #22242b;
+  box-shadow: 0 2px 3px 2px #06060b;
+  border-radius: 14px;
+  min-height: 10px;
+  min-width: 90px;
+  margin: 0px 5px 0px 0px;
+}
+
+scale slider {
+  background-image: none;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+}
+
+tooltip {
+  background-color: #262842;
+}
+
+#network {
+  background-color: #262842;
+  color: #afd0fc;
+  border-radius: 14px;
+  margin: 3px 1px 0px 1px;
+  padding: 0px 9px 0px 9px;
+}
+
+#network.disconnected {
+  color: #eba0ac;
+}
+#network.tooltip {
+  background-color: #262842;
+}
+
+#custom-essid {
+  background-color: #262842;
+  border-radius: 100%;
+  color: #afd0fc;
+  margin: 0px 1px 0px 1px;
+}
+
+#custom-menu {
+  background-color: #262842;
+  border-radius: 14px;
+  color: #1793d1;
+  margin: 3px 1px 0px 1px;
+  padding: 0px 9px 0px 9px;
+}
+
+#custom-pacman {
+  background-color: #262842;
+  border-radius: 14px;
+  color: #ff0076;
+  margin: 3px 1px 0px 1px;
+  padding: 0px 9px 0px 9px;
+}
+
+#custom-power {
+  background-color: #262842;
+  border-radius: 14px;
+  margin: 3px 1px 0px 1px;
+  padding: 0px 9px 0px 9px;
+}
+
+#custom-separator {
+  color: #45475a;
+}
+
+#custom-ram {
+  background-color: #262842;
+  border-radius: 14px;
+  margin: 3px 1px 0px 1px;
+  padding: 0px 9px 0px 9px;
+  color: #eba0ac;
+}
+
+#battery {
+  background-color: #262842;
+  border-radius: 14px;
+  margin: 3px 1px 0px 1px;
+  padding: 0px 9px 0px 9px;
+  color: #c8f0c7;
+}
+
+#cpu {
+  background-color: #262842;
+  border-radius: 14px;
+  margin: 3px 1px 0px 1px;
+  padding: 0px 9px 0px 9px;
+}
+
+#custom-clock-minutes,
+#custom-clock-hours {
+}
+
+#custom-clock-hours {
+  margin: 0px 5px 0px -3px;
+}
+
+#custom-clock-minutes {
+  margin: 0px 5px 0px -3px;
+}
+
+#custom-clock-separator {
+  color: #bac2de;
+  margin: 0px 4px 1px 4px;
+}
+
+#custom-date {
+  margin: 0px 20px 0px -1px;
+}
+
+#custom-media {
+  border-radius: 14px;
+  background-color: #262842;
+  color: #39ff14;
+  margin: 3px 1px 0px 1px;
+  padding: 0px 9px 0px 9px;
+}
+
+#custom-music-symbol {
+  color: #eba0ac;
+  margin-right: 10px;
+}
+
+#custom-music {
+  color: #b4befe;
+}
+
+#custom-prev,
+#custom-next {
+  color: #afd0fc;
+  margin: 3px 8px 0px 8px;
+}
+
+#clock {
+  background-color: #262842;
+  border-radius: 14px;
+  margin: 3px 3px 0px 3px;
+  padding: 0px 9px 0px 9px;
+}
+
+#clock.tooltip {
+  background-color: #262842;
+}
+
+#memory {
+  background-color: #262842;
+  border-radius: 14px;
+  margin: 3px 1px 0px 1px;
+  padding: 0px 3px 0px 3px;
+}
+
+#custom-prev {
+  margin: 3px 8px 0px 5px;
+}
+
+#custom-play-pause {
+  color: #94e2d5;
+  margin: 3px 8px 0px 8px;
+}
+
+#workspaces {
+  background-color: #262842;
+  border-radius: 14px;
+  margin: 3px 1px 0px 1px;
+  padding: 0px 3px 0px 0px;
+}
+
+#workspaces button {
+  background: transparent;
+  margin: 0px 0px 0px 0px;
+  color: #fbecc9;
+}
+
+#workspaces button.focused {
+  background: #ffffff;
+  color: #262842;
+}
+
+#tray {
+  margin: 0px 10px 0px 5px;
+}
+
+/*# sourceMappingURL=style.css.map */
