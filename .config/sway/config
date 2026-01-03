@@ -28,7 +28,9 @@ assign [class="alacritty"] workspace 3
 assign [class="Alacritty"] workspace 3
 assign [app_id="Alacritty"] workspace 3
 assign [app_id="alacritty"] workspace 3
-assign [class="Spotify"] workspace 6
+assign [app_id="signal"] workspace 4
+assign [class="Spotify Premium"] workspace 6
+assign [app_id="spotify"] workspace 6
 assign [app_id="firefox"] workspace 1
 
 ################################################################################
@@ -57,6 +59,7 @@ exec swaync
 exec spotify
 exec firefox-developer-edition
 exec alacritty
+exec signal-desktop --use-tray-icon &
 
 blur enable
 blur_xray enable
